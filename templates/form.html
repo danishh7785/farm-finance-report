@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GramIQ Farm Finance Report</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --accent: #22c55e;
+            --bg: #0f172a;
+            --card-bg: #0b1120;
+            --border-subtle: #1f2937;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top left, #22c55e15, transparent 60%),
+                        radial-gradient(circle at bottom right, #22c55e10, transparent 55%),
+                        #020617;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+
+        .glass-shell {
+            width: 100%;
+            max-width: 1200px;
+            background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98));
+            border-radius: 24px;
+            border: 1px solid rgba(148,163,184,0.2);
+            box-shadow:
+                0 24px 80px rgba(0,0,0,0.65),
+                0 0 0 1px rgba(15,23,42,0.9);
+            overflow: hidden;
+            backdrop-filter: blur(22px);
+        }
+
+        .hero-pane {
+            background: radial-gradient(circle at top, #16a34a44, transparent 65%),
+                        linear-gradient(160deg, #0f172a, #020617);
+            padding: 32px 32px 28px 32px;
+            border-bottom: 1px solid rgba(148,163,184,0.15);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(22,163,74,0.08);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #bbf7d0;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-badge span.dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34,197,94,0.9);
+        }
+
+        .hero-title {
+            margin-top: 18px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            color: #f9fafb;
+        }
+
+        .hero-sub {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 460px;
+        }
+
+        .hero-meta {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(55,65,81,0.8);
+        }
+
+        .hero-meta-item span.icon {
+            font-size: 14px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 0;
+        }
+
+        @media (max-width: 992px) {
+            .layout {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .form-pane {
+            padding: 24px 28px 24px 32px;
+            border-right: 1px solid rgba(30,64,175,0.5);
+        }
+
+        @media (max-width: 992px) {
+            .form-pane {
+                border-right: none;
+                border-bottom: 1px solid rgba(30,64,175,0.5);
+                padding-inline: 20px;
+            }
+        }
+
+        .side-pane {
+            padding: 24px 24px 28px 24px;
+            background: radial-gradient(circle at top right, #22c55e22, transparent 55%),
+                        linear-gradient(145deg, #020617, #020617);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(55,65,81,0.8);
+        }
+
+        .logo-pill img {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            object-fit: contain;
+            background: #020617;
+        }
+
+        .logo-pill span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .side-highlight {
+            margin-top: 4px;
+            font-size: 13px;
+            color: #bbf7d0;
+        }
+
+        .metric-card {
+            border-radius: 18px;
+            padding: 16px 18px;
+            background: radial-gradient(circle at top left, #22c55e1f, transparent 55%),
+                        rgba(15,23,42,0.95);
+            border: 1px solid rgba(55,65,81,0.8);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .metric-title {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .metric-chip {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: rgba(22,163,74,0.12);
+            border: 1px solid rgba(34,197,94,0.5);
+            color: #bbf7d0;
+        }
+
+        .metric-main {
+            font-size: 22px;
+            font-weight: 600;
+            color: #f9fafb;
+        }
+
+        .metric-sub {
+            margin-top: 2px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .tip-card {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .tip-card ul {
+            padding-left: 18px;
+            margin-bottom: 0;
+        }
+
+        .tip-card li + li {
+            margin-top: 3px;
+        }
+
+        .field-section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: #e5e7eb;
+            margin-bottom: 4px;
+        }
+
+        .form-control,
+        .form-select {
+            background: rgba(15,23,42,0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(55,65,81,0.8);
+            color: #e5e7eb;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34,197,94,0.5);
+            background: rgba(15,23,42,0.96);
+            color: #f9fafb;
+        }
+
+        .form-control::placeholder {
+            color: #6b7280;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px dashed rgba(148,163,184,0.6);
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
+            border: none;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            box-shadow:
+                0 14px 35px rgba(22,163,74,0.55),
+                0 0 0 1px rgba(34,197,94,0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #15803d, #22c55e);
+            transform: translateY(-1px);
+            box-shadow:
+                0 18px 40px rgba(22,163,74,0.7),
+                0 0 0 1px rgba(34,197,94,0.3);
+        }
+
+        .btn-outline-light {
+            border-radius: 999px;
+            font-size: 13px;
+            padding: 9px 16px;
+            border-color: rgba(148,163,184,0.5);
+            color: var(--text-muted);
+        }
+
+        .btn-outline-light:hover {
+            border-color: #e5e7eb;
+            color: #f9fafb;
+            background: rgba(15,23,42,0.96);
+        }
+
+        .chip {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.95);
+            border: 1px solid rgba(55,65,81,0.8);
+            color: var(--text-muted);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+        }
+
+        thead {
+            background: rgba(15,23,42,0.95);
+        }
+
+        th, td {
+            padding: 8px 8px;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(31,41,55,0.8);
+        }
+
+        th {
+            font-weight: 500;
+            color: #9ca3af;
+        }
+
+        tbody tr:hover td {
+            background: rgba(15,23,42,0.85);
+        }
+
+        .table-input {
+            width: 100%;
+            border-radius: 7px;
+            border: 1px solid rgba(55,65,81,0.8);
+            background: rgba(15,23,42,0.9);
+            color: #e5e7eb;
+            font-size: 12px;
+            padding: 6px 8px;
+        }
+
+        .table-input::placeholder {
+            color: #6b7280;
+        }
+
+        .table-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(34,197,94,0.4);
+        }
+
+        .accent-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: rgba(22,163,74,0.15);
+            border: 1px solid rgba(34,197,94,0.6);
+            font-size: 11px;
+            color: #bbf7d0;
+        }
+
+        .accent-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+        }
+
+        .side-footer {
+            margin-top: auto;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .side-footer span strong {
+            color: #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+<div class="glass-shell">
+    <!-- HERO HEADER -->
+    <div class="hero-pane">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            <span>GramIQ • Smart Farm Accounting</span>
+        </div>
+        <h1 class="hero-title">Generate Farm Finance PDF Report</h1>
+        <p class="hero-sub">
+            Capture all income and expenses for a crop season, and download a clean PDF with summary, tables, and charts for your records.
+        </p>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <span class="icon">📄</span>
+                <span>Auto‑generated PDF with chart</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="icon">🧮</span>
+                <span>Profit &amp; cost per acre computed</span>
+            </div>
+            <div class="hero-meta-item">
+                <span class="icon">🌾</span>
+                <span>Designed for real farmers</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="layout">
+        <!-- FORM SIDE -->
+        <div class="form-pane">
+            <form action="/generate" method="POST">
+                <!-- Farmer & Crop section -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h2 class="field-section-title mb-0">Farmer &amp; Crop</h2>
+                        <span class="tag">
+                            <span>Basic</span>Details
+                        </span>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="farmer_name">Farmer name</label>
+                            <input type="text" id="farmer_name" name="farmer_name"
+                                   class="form-control"
+                                   placeholder="e.g. Ramesh Kumar" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="crop_name">Crop name</label>
+                            <input type="text" id="crop_name" name="crop_name"
+                                   class="form-control"
+                                   placeholder="e.g. Cotton" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="season">Season</label>
+                            <select id="season" name="season" class="form-select" required>
+                                <option value="" disabled selected>Select season</option>
+                                <option value="Kharif">Kharif</option>
+                                <option value="Rabi">Rabi</option>
+                                <option value="Zaid">Zaid</option>
+                                <option value="Summer">Summer</option>
+                                <option value="Custom">Custom</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="acres">Cultivated area (acres)</label>
+                            <input type="number" step="0.01" min="0" id="acres" name="acres"
+                                   class="form-control"
+                                   placeholder="e.g. 3.5" required>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-secondary border-opacity-50 my-3">
+
+                <!-- Expenses -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h2 class="field-section-title mb-0">Expenses</h2>
+                        <span class="tag">
+                            💸 Track all cost items
+                        </span>
+                    </div>
+                    <small class="text-muted d-block mb-2" style="font-size: 11px;">
+                        Add every cost you incurred — seeds, fertilizers, labour, transport, rent, etc.
+                    </small>
+
+                    <table id="expense_table">
+                        <thead>
+                        <tr>
+                            <th style="width: 24%;">Category</th>
+                            <th style="width: 18%;">Amount</th>
+                            <th style="width: 20%;">Date</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" name="expense_category[]" class="table-input"
+                                       placeholder="e.g. Seeds">
+                            </td>
+                            <td>
+                                <input type="number" step="0.01" min="0"
+                                       name="expense_amount[]" class="table-input"
+                                       placeholder="₹">
+                            </td>
+                            <td>
+                                <input type="date" name="expense_date[]" class="table-input">
+                            </td>
+                            <td>
+                                <input type="text" name="expense_desc[]" class="table-input"
+                                       placeholder="Short note (optional)">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <button type="button" class="btn btn-outline-light btn-sm"
+                                onclick="addExpenseRow()">
+                            + Add expense row
+                        </button>
+                        <span class="chip">Hint: Keep one row per cost type for a clean PDF.</span>
+                    </div>
+                </div>
+
+                <hr class="border-secondary border-opacity-50 my-3">
+
+                <!-- Income -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h2 class="field-section-title mb-0">Income</h2>
+                        <span class="tag">
+                            💰 Sales &amp; subsidies
+                        </span>
+                    </div>
+                    <small class="text-muted d-block mb-2" style="font-size: 11px;">
+                        Record every earning from this crop — produce sales, government schemes, bonuses, etc.
+                    </small>
+
+                    <table id="income_table">
+                        <thead>
+                        <tr>
+                            <th style="width: 24%;">Category</th>
+                            <th style="width: 18%;">Amount</th>
+                            <th style="width: 20%;">Date</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" name="income_category[]" class="table-input"
+                                       placeholder="e.g. Market sale">
+                            </td>
+                            <td>
+                                <input type="number" step="0.01" min="0"
+                                       name="income_amount[]" class="table-input"
+                                       placeholder="₹">
+                            </td>
+                            <td>
+                                <input type="date" name="income_date[]" class="table-input">
+                            </td>
+                            <td>
+                                <input type="text" name="income_desc[]" class="table-input"
+                                       placeholder="Short note (optional)">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <button type="button" class="btn btn-outline-light btn-sm"
+                                onclick="addIncomeRow()">
+                            + Add income row
+                        </button>
+                        <span class="chip">Add as many rows as you need.</span>
+                    </div>
+                </div>
+
+                <hr class="border-secondary border-opacity-50 my-3">
+
+                <!-- Actions -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-column">
+                        <span style="font-size: 11px; color: #9ca3af;">
+                            Your PDF will include logo, summary, chart, and detailed tables automatically.
+                        </span>
+                        <span style="font-size: 11px; color: #6b7280;">
+                            Fields marked above are required for accurate calculations.
+                        </span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="reset" class="btn btn-outline-light">
+                            Clear form
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Generate PDF
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- SIDE PANE -->
+        <div class="side-pane">
+            <div>
+                <div class="logo-pill">
+                    <!-- uses existing static/logo.png without backend change -->
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="GramIQ logo">
+                    <span>GramIQ Accounting</span>
+                </div>
+                <p class="side-highlight">
+                    “Proudly maintained accounting with GramIQ” — the same line appears in your PDF footer for consistent branding.
+                </p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div>
+                        <div class="metric-title">One-click farm insights</div>
+                        <div class="metric-sub">We compute profit, expense, and cost per acre from your entries.</div>
+                    </div>
+                    <div class="metric-chip">Auto‑calculated</div>
+                </div>
+                <div class="metric-main">Profit, charts &amp; tables</div>
+                <p class="metric-sub mt-2">
+                    Use this report for bank loans, FPO meetings, or your own record keeping.
+                </p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-header">
+                    <div class="metric-title">Tips for better reporting</div>
+                    <div class="accent-pill">
+                        <span class="accent-dot"></span>
+                        <span>Best practice</span>
+                    </div>
+                </div>
+                <div class="tip-card">
+                    <ul>
+                        <li>Fill accurate dates so seasonal patterns are visible.</li>
+                        <li>Break down expenses into logical categories.</li>
+                        <li>Use the same crop &amp; season naming every year.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="side-footer">
+                <span>PDF name pattern: <strong>{crop}_{acres}_{season}_{year}.pdf</strong></span>
+                <span>Chart: <strong>Income vs Expense bar graph</strong></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addExpenseRow() {
+        const tbody = document.querySelector("#expense_table tbody");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><input type="text" name="expense_category[]" class="table-input" placeholder="Category"></td>
+            <td><input type="number" step="0.01" min="0" name="expense_amount[]" class="table-input" placeholder="₹"></td>
+            <td><input type="date" name="expense_date[]" class="table-input"></td>
+            <td><input type="text" name="expense_desc[]" class="table-input" placeholder="Short note (optional)"></td>
+        `;
+        tbody.appendChild(row);
+    }
+
+    function addIncomeRow() {
+        const tbody = document.querySelector("#income_table tbody");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><input type="text" name="income_category[]" class="table-input" placeholder="Category"></td>
+            <td><input type="number" step="0.01" min="0" name="income_amount[]" class="table-input" placeholder="₹"></td>
+            <td><input type="date" name="income_date[]" class="table-input"></td>
+            <td><input type="text" name="income_desc[]" class="table-input" placeholder="Short note (optional)"></td>
+        `;
+        tbody.appendChild(row);
+    }
+</script>
+</body>
+</html>
